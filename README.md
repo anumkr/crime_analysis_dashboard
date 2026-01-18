@@ -3,21 +3,6 @@
 ## 📌 Overview
 A full‑stack web application designed to manage crime records and provide actionable insights through analytics and pattern detection. The system enables law enforcement, researchers, and analysts to track crime trends, visualize hotspots, and generate recommendations to curb criminal activity.
 
-## 📸 Screenshots
-
-### Dashboard Overview
-![Dashboard Overview]("crime_analysis_dashboard/crimedashboard.png")
-
-### Crime Records Module
-![Crime Records]("crime_analysis_dashboard/crimeentry.png")
-
-### Analytics Dashboard
-![Analytics Dashboard]("crime_analysis_dashboard/pattern1.png")
-![Analytics Dashboard]("crime_analysis_dashboard/pattern2.png")
-
-### Pattern Analysis
-![Pattern Analysis]("crime_analysis_dashboard/analytics.png")
-
 ## 🧱 Tech Stack
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js with Express
