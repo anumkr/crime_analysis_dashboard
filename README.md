@@ -6,17 +6,17 @@ A full‑stack web application designed to manage crime records and provide acti
 ## 📸 Screenshots
 
 ### Dashboard Overview
-![Dashboard Overview]("crimedashboard.png")
+![Dashboard Overview]("crime_analysis_dashboard/crimedashboard.png")
 
 ### Crime Records Module
-![Crime Records]("crimeentry.png")
+![Crime Records]("crime_analysis_dashboard/crimeentry.png")
 
 ### Analytics Dashboard
-![Analytics Dashboard]("pattern1.png")
-![Analytics Dashboard]("pattern2.png")
+![Analytics Dashboard]("crime_analysis_dashboard/pattern1.png")
+![Analytics Dashboard]("crime_analysis_dashboard/pattern2.png")
 
 ### Pattern Analysis
-![Pattern Analysis]("analytics.png")
+![Pattern Analysis]("crime_analysis_dashboard/analytics.png")
 
 ## 🧱 Tech Stack
 - **Frontend**: HTML, CSS, JavaScript
