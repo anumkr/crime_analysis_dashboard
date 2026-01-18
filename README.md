@@ -7,6 +7,16 @@ A full‑stack web application designed to manage crime records and provide acti
 ### Dashboard Overview
 ![Dashboard Overview](https://github.com/anumkr/crime_analysis_dashboard/blob/main/crimedashboard.png?raw=true)
 
+### Crime Records Module
+![Crime Records](https://github.com/anumkr/crime_analysis_dashboard/blob/main/crimeentry.png?raw=true)
+
+### Analytics Dashboard
+![Analytics Dashboard](https://github.com/anumkr/crime_analysis_dashboard/blob/main/pattern1.png?raw=true)
+![Analytics Dashboard](https://github.com/anumkr/crime_analysis_dashboard/blob/main/pattern2.png?raw=true)
+
+### Pattern Analysis
+![Pattern Analysis](https://github.com/anumkr/crime_analysis_dashboard/blob/main/analytics.png?raw=true)
+
 ## 🧱 Tech Stack
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js with Express
