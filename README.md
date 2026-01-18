@@ -6,17 +6,17 @@ A full‑stack web application designed to manage crime records and provide acti
 ## 📸 Screenshots
 
 ### Dashboard Overview
-![Dashboard Overview]("C:\Users\MANOJ\Pictures\Screenshots\crimedashboard.png")
+![Dashboard Overview]("crimedashboard.png")
 
 ### Crime Records Module
-![Crime Records]("C:\Users\MANOJ\Pictures\Screenshots\crimeentry.png")
+![Crime Records]("crimeentry.png")
 
 ### Analytics Dashboard
-![Analytics Dashboard]("C:\Users\MANOJ\Pictures\Screenshots\pattern1.png")
-![Analytics Dashboard]("C:\Users\MANOJ\Pictures\Screenshots\pattern2.png")
+![Analytics Dashboard]("pattern1.png")
+![Analytics Dashboard]("pattern2.png")
 
 ### Pattern Analysis
-![Pattern Analysis]("C:\Users\MANOJ\Pictures\Screenshots\analytics.png")
+![Pattern Analysis]("analytics.png")
 
 ## 🧱 Tech Stack
 - **Frontend**: HTML, CSS, JavaScript
