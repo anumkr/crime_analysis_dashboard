@@ -3,6 +3,10 @@
 ## 📌 Overview
 A full‑stack web application designed to manage crime records and provide actionable insights through analytics and pattern detection. The system enables law enforcement, researchers, and analysts to track crime trends, visualize hotspots, and generate recommendations to curb criminal activity.
 
+## 📸 Screenshots
+### Dashboard Overview
+![Dashboard Overview](https://github.com/anumkr/crime_analysis_dashboard/blob/main/crimedashboard.png?raw=true)
+
 ## 🧱 Tech Stack
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js with Express
