@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <title>Crime Records Table</title>
+    <style>
+        body{
+            background-color:#0b1020;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .logo{
+            height: 50px;
+        }
+        .heading{
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-weight: bolder;
+            margin-top: -45px;
+            margin-left: 55px;
+        }
+        .exp{
+            color: white;
+            font-family: "Poppins", sans-serif;
+            margin-left: 55px;
+            font-size: 0.75rem;
+            font-weight: lighter;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap; 
+        }
+        #searchbar{
+            flex: 1;
+            min-width: 200px;
+            background-color: rgb(73, 70, 70);
+            color: white;
+            font-weight: 600;
+            border: 0cap;
+            border-radius: 8px;
+        }
+        #filtertype{
+            background-color: rgb(73, 70, 70);
+            color: white;
+            border: 0cap;
+            border-radius: 8px;
+            width:200px;
+        }
+        #addrecordbtn{
+            background-color: orange;
+            border-radius: 8px;
+            border: 0cap;
+            margin-left: auto; 
+        }
+        input, select, button {
+            padding: 6px;
+            font-size: 14px;
+        }
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            table-layout: auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            color: white;
+            word-wrap: break-word;
+        }
+        .severity-low { 
+            color: green; 
+            font-weight: bold; 
+        }
+        .severity-medium { 
+            color: orange; 
+            font-weight: bold; 
+        }
+        .severity-high { 
+            color: red; 
+            font-weight: bold; 
+        }
+        .severity-critical { 
+            color: darkred; 
+            font-weight: bold; 
+        }
+        .actions button {
+            margin-right: 5px;
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 1.2rem;
+                margin-left: 10px;
+                margin-top: 10px;
+            }
+            .exp {
+                margin-left: 10px;
+                font-size: 0.65rem;
+            }
+            #filtertype {
+                width: 100%;
+            }
+            #addrecordbtn {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #searchbar, #filtertype, #addrecordbtn {
+                width: 100%;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 6px;
+            }
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #1c1c2c;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            color: white;
+            font-family: "Poppins", sans-serif;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+        }
+        .modal-content label {
+            display: block;
+            margin-top: 10px;
+        }
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            border-radius: 6px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+        .modal-content button {
+            margin-top: 15px;
+            margin-right: 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: orange;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn {
+            display: block;              
+            margin: 40px auto;           
+            background-color: orange;
+            color: black;
+            font-weight: bold;
+            height: 20px;
+            border: none;
+            border-radius: 8px;
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 5px;
+            }
+
+            
+            @media (max-width: 600px) {
+            .btn {
+                width: 100%;               
+                max-width: 250px;          
+            }
+}
+
+    </style>
+</head>
+<body>
+    <img class="logo" src="recordlogo.png">
+    <div class="heading">Crime Records</div>
+    <div class="exp">Manage and track all incidents in the database</div>
+    <div class="controls">
+        <input type="text" id="searchbar" placeholder="Search by type/location...">
+        <select id="filtertype">
+        <option value="">All Types</option>
+        <option value="Theft">Theft</option>
+        <option value="Assault">Assault</option>
+        <option value="Burglary">Burglary</option>
+        <option value="Fraud">Fraud</option>
+        <option value="Robbery">Robbery</option>
+        <option value="Cybercrime">Cybercrime</option>
+        </select>
+        <button id="addrecordbtn">+Add Record</button>
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table id="crimeTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="crimeTableBody">
+            </tbody>
+        </table>
+    </div>
+    
+<div id="addRecordModal" style="display:none;" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Add New Crime Record</h2>
+    <form id="crimeForm">
+        <label>Crime Type:</label>
+        <select id="crime_type" required>
+            <option value="">Select type</option>
+            <option>Theft</option>
+            <option>Assault</option>
+            <option>Burglary</option>
+            <option>Fraud</option>
+            <option>Robbery</option>
+            <option>Cybercrime</option>
+        </select>
+
+        <label>Location:</label>
+        <select id="location" required>
+            <option value="">Select location</option>
+            <option>Downtown District</option>
+            <option>North Zone</option>
+            <option>East Side</option>
+        </select>
+
+        <label>Date:</label>
+        <input type="date" id="date" required>
+
+        <label>Time:</label>
+        <input type="time" id="time" required>
+
+        <label>Severity:</label>
+        <select id="severity" required>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Critical</option>
+        </select>
+
+        <label>Status:</label>
+        <select id="status" required>
+            <option>Open</option>
+            <option>Closed</option>
+            <option>Under Investigation</option>
+        </select>
+
+        <label>Description:</label>
+        <textarea id="description" placeholder="Enter incident description..." rows="3"></textarea>
+
+        <button type="submit">Add Record</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+</form>
+
+  </div>
+</div>
+
+<div id="editRecordModal" style="display:none;" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Edit Crime Record</h2>
+    <form id="editCrimeForm">
+      <input type="hidden" id="edit_crime_id" />
+
+      <label>Crime Type:</label>
+      <select id="edit_crime_type" required>
+        <option>Theft</option>
+        <option>Assault</option>
+        <option>Burglary</option>
+        <option>Fraud</option>
+        <option>Robbery</option>
+        <option>Cybercrime</option>
+      </select>
+
+      <label>Location:</label>
+      <select id="edit_location" required>
+        <option>Downtown District</option>
+        <option>North Zone</option>
+        <option>East Side</option>
+        <option>Market</option>
+      </select>
+
+      <label>Date:</label>
+      <input type="date" id="edit_date" required>
+
+      <label>Time:</label>
+      <input type="time" id="edit_time" required>
+
+      <label>Severity:</label>
+      <select id="edit_severity" required>
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+        <option>Critical</option>
+      </select>
+
+      <label>Status:</label>
+      <select id="edit_status" required>
+        <option>Open</option>
+        <option>Closed</option>
+        <option>Under Investigation</option>
+      </select>
+
+      <label>Description:</label>
+      <textarea id="edit_description" rows="3"></textarea>
+
+      <button type="submit">Save Changes</button>
+      <button type="button" onclick="closeEditModal()">Cancel</button>
+    </form>
+  </div>
+</div>
+<a href="patterntable.html" class="btn">View Dashboard</button>
+
+<script src="table.js"></script> 
+<script src="modal.js"></script>
+<script src="edit.js"></script>
+<script>
+document.querySelector(".btn").addEventListener("click", () => {
+  
+  const rows = Array.from(document.querySelectorAll("#crimeTableBody tr")).map(row => {
+    const cells = row.querySelectorAll("td");
+    return {
+      type: cells[1].innerText.trim(),
+      location: cells[2].innerText.trim(),
+      date: cells[3].innerText.trim(),
+      severity: cells[4].innerText.trim(),
+      status: cells[5].innerText.trim()
+    };
+  });
+
+  
+  localStorage.setItem("crimeData", JSON.stringify(rows));
+
+  
+  window.location.href = "patterntable.html";
+});
+</script>
+
+</body>
+</html>
+

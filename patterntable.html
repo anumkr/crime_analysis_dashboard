@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans&family=Montserrat&family=Roboto+Slab&family=Roboto&family=Source+Sans+3&family=Source+Serif+4&family=Ubuntu&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <title>Analysis Dashboard</title>
+  <style>
+    body {
+      background-color: #0b1020;
+      font-family: "Poppins", sans-serif;
+      margin: 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .heading {
+      color: white;
+      font-weight: bolder;
+      margin-top: -45px;
+      margin-left: 55px;
+    }
+
+    .exp {
+      color: white;
+      margin-left: 55px;
+      font-size: 0.75rem;
+      font-weight: lighter;
+    }
+
+    .container {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px;
+    }
+
+    .summarydiv {
+      color: white;
+      width: 200px;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: lighter;
+      font-size: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #0d194d, #0d151b);
+    }
+
+    .summarydiv div {
+      font-weight: bolder;
+      width: 135px;
+      height: 30px;
+      margin-top: 5px;
+    }
+
+    .graphcontainer {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    .subgraph1, .subgraph2, .subgraph3, .subgraph4 {
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #0d194d, #0d151b);
+      color: white;
+      padding: 10px;
+      font-weight: bolder;
+    }
+
+    .subdiv1 {
+      font-size: 0.75rem;
+      margin-top: 5px;
+      font-weight: lighter;
+    }
+
+    #graphdiv1, #graphdiv2, #graphdiv3, #graphdiv4 {
+      height: 200px;
+      margin-top: 20px;
+    }
+
+    .patternbtn {
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      height: 50px;
+      width: 150px;
+      background: linear-gradient(135deg, #3353e1, #08263b);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .heading, .exp {
+        margin-left: 0;
+        text-align: center;
+      }
+
+      .graphcontainer {
+        grid-template-columns: 1fr;
+      }
+
+      .patternbtn {
+        margin-left: auto;
+        margin-right: auto;
+        text-decoration: none;
+        display: flex; 
+        justify-content: center;  
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="chartlogo.png" />
+  <div class="heading">Analytics Dashboard</div>
+  <div class="exp">Comprehensive crime data visualization and analysis</div>
+
+  <div class="container">
+    <div class="summarydiv">Peak Month
+      <div id="descpeak1"></div>
+      <div id="descpeak2"></div>
+    </div>
+    <div class="summarydiv">Lowest Month
+      <div id="desclow1"></div>
+      <div id="desclow2"></div>
+    </div>
+    <div class="summarydiv">YoY Change
+      <div id="descyoy1"></div>
+      <div id="descyoy2"></div>
+    </div>
+    <div class="summarydiv">Resolution Change
+      <div id="descres1"></div>
+      <div id="descres2"></div>
+    </div>
+  </div>
+
+  <div class="graphcontainer">
+    <div class="subgraph1">Crime Trends
+      <div class="subdiv1">Monthly crime reports vs resolved cases</div>
+      <div id="graphdiv1"><canvas id="chart1"></canvas></div>
+    </div>
+    <div class="subgraph2">Year-On-Year Comparison
+      <div class="subdiv1">Total crimes by year</div>
+      <div id="graphdiv2"><canvas id="chart2"></canvas></div>
+    </div>
+    <div class="subgraph3">Crimes by Type
+      <div class="subdiv1">Distribution of crime categories</div>
+      <div id="graphdiv3"><canvas id="chart3"></canvas></div>
+    </div>
+    <div class="subgraph4">Crime Hotspots
+      <div class="subdiv1">Crimes by location</div>
+      <div id="graphdiv4"><canvas id="chart4"></canvas></div>
+    </div>
+  </div>
+
+  <a href="analysis.html" class="patternbtn">Pattern Analysis</a>
+</body>
+<script>
+function getCrimeData() {
+  const raw = localStorage.getItem("crimeData");
+  if (!raw) return { monthlyCounts: [], yearlyCounts: {}, typeCounts: {}, locationCounts: {} };
+
+  const rows = JSON.parse(raw);
+  let monthlyCounts = Array(12).fill(0);
+  let yearlyCounts = {};
+  let typeCounts = {};
+  let locationCounts = {};
+
+  rows.forEach(({ type, location, date }) => {
+    const d = new Date(date);
+    if (isNaN(d)) return; 
+
+    const month = d.getMonth(); 
+    const year = d.getFullYear();
+
+    monthlyCounts[month]++;
+    yearlyCounts[year] = (yearlyCounts[year] || 0) + 1;
+    typeCounts[type] = (typeCounts[type] || 0) + 1;
+    locationCounts[location] = (locationCounts[location] || 0) + 1;
+  });
+
+  return { monthlyCounts, yearlyCounts, typeCounts, locationCounts };
+}
+function buildCharts() {
+  const { monthlyCounts, yearlyCounts, typeCounts, locationCounts } = getCrimeData();
+
+ 
+  new Chart(document.getElementById('chart1'), {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [
+        { label: 'Reported Crimes', data: monthlyCounts, borderColor: 'orange', fill: false }
+      ]
+    },
+    options: { responsive: true }
+  });
+
+ 
+  new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(yearlyCounts),
+      datasets: [{ label: 'Total Crimes', data: Object.values(yearlyCounts), backgroundColor: 'steelblue' }]
+    },
+    options: { responsive: true }
+  });
+
+  new Chart(document.getElementById('chart3'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(typeCounts),
+      datasets: [{ data: Object.values(typeCounts), backgroundColor: ['#ff6384','#36a2eb','#cc65fe','#ffce56','#4bc0c0','#9966ff'] }]
+    },
+    options: { responsive: true }
+  });
+
+  new Chart(document.getElementById('chart4'), {
+    type: 'pie',
+    data: {
+      labels: Object.keys(locationCounts),
+      datasets: [{ data: Object.values(locationCounts), backgroundColor: ['#ff9f40','#4bc0c0','#9966ff','#ff6384','#36a2eb'] }]
+    },
+    options: { responsive: true }
+  });
+  updateSummaryBoxes(monthlyCounts, yearlyCounts);
+}
+function updateSummaryBoxes(monthlyCounts, yearlyCounts) {
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const peakValue = Math.max(...monthlyCounts);
+const peakMonths = monthNames.filter((_, i) => monthlyCounts[i] === peakValue);
+document.getElementById("descpeak1").innerText = peakMonths.join(", ");
+document.getElementById("descpeak2").innerText = peakValue;
+
+const nonZeroMonths = monthlyCounts.map((val, i) => ({ val, i })).filter(m => m.val > 0);
+if (nonZeroMonths.length > 0) {
+  const lowValue = Math.min(...nonZeroMonths.map(m => m.val));
+  const lowMonths = nonZeroMonths.filter(m => m.val === lowValue).map(m => monthNames[m.i]);
+  document.getElementById("desclow1").innerText = lowMonths.join(", ");
+  document.getElementById("desclow2").innerText = lowValue;
+} 
+else {
+  document.getElementById("desclow1").innerText = "N/A";
+  document.getElementById("desclow2").innerText = "0";
+}
+
+
+  const years = Object.keys(yearlyCounts).map(Number).sort();
+  let yoyChange = "N/A";
+  if (years.length >= 2) {
+    const latest = yearlyCounts[years[years.length - 1]];
+    const previous = yearlyCounts[years[years.length - 2]];
+    const change = latest - previous;
+    const percent = ((change / previous) * 100).toFixed(1);
+    yoyChange = `${change >= 0 ? "+" : ""}${percent}%`;
+    document.getElementById("descyoy1").innerText = `${years[years.length - 2]} → ${years[years.length - 1]}`;
+    document.getElementById("descyoy2").innerText = yoyChange;
+  } else {
+    document.getElementById("descyoy1").innerText = "Insufficient data";
+    document.getElementById("descyoy2").innerText = "N/A";
+  }
+
+  document.getElementById("descres1").innerText = "To be determined";
+  document.getElementById("descres2").innerText = "—";
+}
+
+
+
+document.addEventListener("DOMContentLoaded", buildCharts);
+</script>
+</html>

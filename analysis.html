@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pattern Analysis</title>
+  <style>
+    body {
+      background-color: #0b1020;
+      font-family: "Poppins", sans-serif;
+      margin: 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .heading {
+      color: white;
+      font-weight: bolder;
+      margin-top: -45px;
+      margin-left: 55px;
+    }
+
+    .exp {
+      color: white;
+      margin-left: 55px;
+      font-size: 0.75rem;
+      font-weight: lighter;
+    }
+
+    .maindiv {
+      border-top: 0.5px solid white;
+      margin-top: 30px;
+      height: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 10px;
+    }
+
+    .update {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #0d194d, #0d151b);
+      border-radius: 8px;
+      margin-top: 10px;
+      color: white;
+      padding: 5px;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+
+    #seasonheading,
+    #hotspot,
+    #prevyear,
+    #peaktime {
+      margin-top: 10px;
+      height: 75px;
+      color:goldenrod;
+      font-size: 1.25rem;
+    }
+
+    .box2 {
+      margin-top: 50px;
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .subbox {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #0d194d, #0d151b);
+      width: 300px;
+      border-radius: 8px;
+      color: white;
+      padding: 5px;
+      font-weight: bold;
+      font-size: 0.75rem;
+      flex: 1 1 250px;
+    }
+
+    #msg1,
+    #msg2,
+    #msg3 {
+      margin-top: 10px;
+      height: 75px;
+      color:goldenrod;
+      font-size: 1.25rem;
+    }
+
+    #msg2 {
+      height: 110px;
+    }
+
+    .detailbox {
+      
+      margin-top: 20px;
+      height: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #0d194d, #0d151b);
+      border-radius: 8px;
+      color: white;
+      padding: 5px;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+
+    #detail1 {
+      margin-top: 10px;
+      height: 75px;
+      color:goldenrod;
+      font-size: 1.25rem;
+    }
+
+   
+    @media screen and (max-width: 1024px) {
+      .maindiv {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .box2 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .subbox {
+        width: 100%;
+      }
+      .heading,
+      .exp {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      .heading {
+        font-size: 1rem;
+      }
+      .exp {
+        font-size: 0.65rem;
+      }
+      .update {
+        font-size: 0.7rem;
+      }
+      .subbox {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="analyticslogo.png" />
+  <div class="heading">Pattern Analysis</div>
+  <div class="exp">SQLite based insights and rule-based pattern detection</div>
+  <div class="maindiv">
+    <div class="update">Highest Crime Spike Season
+      <div id="seasonheading"></div>
+    </div>
+    <div class="update">Crime Hotspot Area
+      <div id="hotspot"></div>
+    </div>
+    <div class="update">Comparison with previous year
+      <div id="prevyear"></div>
+    </div>
+    <div class="update">Peak crime time
+      <div id="peaktime"></div>
+    </div>
+  </div>
+  <div class="box2">
+    <div class="subbox">Peak Crime Month
+      <div id="msg1"></div>
+    </div>
+    <div class="subbox">Lowest Risk Location
+      <div id="msg2"></div>
+    </div>
+    <div class="subbox">Most Common Crime
+      <div id="msg3"></div>
+    </div>
+  </div>
+  <div class="detailbox">Recommended Actions
+    <div id="detail1"></div>
+  </div>
+  <script src="analysis.js"></script>
+</body>
+</html>
